@@ -1,0 +1,38 @@
+class Camion extends Voiture {
+//     public $chargeMax;
+//     private $cargaison;
+//     public function __construct(
+//       $nom,
+//       $capaciteReservoir,
+//       $contenuReservoir,
+//       $kilometrage,
+//       $alerteReserve,
+//       $litreAu100,
+//       $chargeMax
+//       )
+//       {
+//       $this->nom = $nom;
+//       $this->capaciteReservoir = $capaciteReservoir;
+//       $this->contenuReservoir = $contenuReservoir;
+//       $this->kilometrage = $kilometrage;
+//       $this->alerteReserve = $alerteReserve;
+//       $this->litreAu100 = $litreAu100;
+//       $this->chargeMax = $chargeMax;
+//       $this->cargaison = 0;
+//       }
+//       public function __get($property) {
+//         if($property === 'cargaison') {
+//           return $this->cargaison;
+//         } else {
+//           throw new Exception('Propriété invalide !');
+//         }
+//       }
+//     public function charger ($poids) {
+//       echo "</br>Camion chargé pour $poids kilos.</br>";
+//       $this->cargaison += $poids;
+//     }
+//     public function afficherTableauDeBordCamion () {
+//       $this->afficherTableauDeBord();
+//       echo "Cargaison : $this->cargaison </br>";
+//     }
+//   }
