@@ -5,7 +5,6 @@ include_once('../Model/Reservation.php');
 Database::connect();
 
 if (isset($_POST)) {
-
         switch($_GET['action']) {
             case 'add' :
                 $clientId = $_POST['client'];
