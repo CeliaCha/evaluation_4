@@ -26,7 +26,7 @@ if (isset($_POST)) {
                 $statut = $_POST['statut'];
             
                 $reservation = new Reservation($clientId, $chambreId, $dateEntree, $dateSortie, $statut);
-                $reservation::edit($_GET['idres']);
+                $reservation->edit($_GET['idres']);
                 echo "La réservation a bien été modifiée.";
                 header("refresh:2;../index.php");
             break;
