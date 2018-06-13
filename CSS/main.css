@@ -6,3 +6,25 @@
     margin: auto;
     margin-top: 20px;
 }
+
+@media screen and (max-width: 500px) { 
+    .hidden-mobile {
+        display: none;
+    }
+
+}
+
+@media screen and (min-width: 501px) { 
+    .hidden-desktop {
+        display: none;
+    }
+
+}
+
+
+
+.h-center {
+    margin: auto;
+    width: 50%;
+}
+

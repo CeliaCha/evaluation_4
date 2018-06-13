@@ -19,32 +19,34 @@
 ?>
 
 <div>@Logo</div>
-
-<h1>Gestion des réservations</h1>
+<div id='wrapper'>
+<h1 class='h-center'>Gestion des réservations</h1>
 
 <!-- Reservations table -->
+<div class="table-responsive">
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Numéro</th>
+      <th scope="col">Id</th>
       <th scope="col">Client</th>
       <th scope="col">Chambre</th>
       <th scope="col">Dates</th>
-      <th scope="col">Statut</th>
+      <th class="hidden-mobile" scope="col" >Statut</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
+    <span class='hidden-mobile'></span>
     <?php
       foreach ($resToDisplay as $row) {
         $dateEntree = date("d-m-Y", strtotime(substr($row['dateEntree'], 0, 10)));
         $dateSortie = date("d-m-Y", strtotime(substr($row['dateSortie'], 0, 10)));
         echo "<tr>
                 <td>{$row['id']}</td>
-                <td>{$row['clientprenom']} {$row['clientnom']}</td>
-                <td>{$row['chambrenom']}</td>
-                <td>Du {$dateEntree} au {$dateSortie}</td>
-                <td> {$row['statut']}</td>
+                <td><span class='hidden-mobile'>{$row['clientprenom']} </span>{$row['clientnom']}</td>
+                <td><span class='hidden-mobile'>{$row['chambrenom']}</span><span class='hidden-desktop'>{$row['chambrenum']}</span></td>
+                <td><span class='hidden-mobile'>Du </span>{$dateEntree}<span class='hidden-mobile'> au {$dateSortie}</td>
+                <td class='hidden-mobile'> {$row['statut']}</td>
                 <td> 
                   <a href='index.php?page=add-edit&action=edit&idres={$row['id']}'>Editer</a> - 
                   <a href='index.php?page=delete&idres={$row['id']}'>Supprimer</a>
@@ -55,9 +57,10 @@
     ?>
   </tbody>
 </table>
+</div>
 
 <!-- Pagination bar -->
-<nav aria-label="Page navigation example">
+<nav class='h-center' aria-label="Page navigation example">
   <ul class="pagination">
     <?php
       echo "<li class='page-item {$linkprevious}'><a class='page-link' href='index.php?page=home&numpage=" . intval($numPage - 1) . "'><</a></li>";
@@ -70,6 +73,7 @@
   </ul>
 </nav>
 
-<a class="btn btn-primary" href="index.php?page=add-edit&action=add">Ajouter</a>
+<a class="btn btn-primary" class='h-center' href="index.php?page=add-edit&action=add">Ajouter</a>
+</div>
 
 

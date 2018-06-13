@@ -42,7 +42,7 @@ class Reservation extends Database {
 
     static function getIndex() {
         $req = parent::$db->prepare(
-            "SELECT reservations.id, clients.prenom AS clientprenom, clients.nom AS clientnom, chambres.nom AS chambrenom, dateEntree, dateSortie, reservations.statut, dateModification
+            "SELECT reservations.id, clients.prenom AS clientprenom, clients.nom AS clientnom, chambres.nom AS chambrenom, chambres.numero AS chambrenum, dateEntree, dateSortie, reservations.statut, dateModification
             FROM reservations 
             INNER JOIN clients
             ON reservations.clientId = clients.id
