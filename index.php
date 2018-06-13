@@ -6,22 +6,22 @@ include_once('./Views/Head.php');
 
 if (!empty($_GET)) {
 
-    switch($_GET['action']) {
+    switch($_GET['page']) {
         case "home":
-            include_once('./Views/Home.php');
+            include('./Views/Home.php');
             break;
-        case "addedit":
-            include_once('./Views/AddEdit.php');
+        case "add-edit":
+            include('./Views/AddEdit.php');
             break;
         case "delete":
-            include_once('./Views/Delete.php');
+            include('./Views/Delete.php');
             break;
         default:
-            include_once('./Views/Home.php');
+            include('./Views/Home.php');
         }
     }
 
-else include_once('./Views/Home.php');
+else include('./Views/Home.php');
 
 include_once('./Views/Foot.php');
 

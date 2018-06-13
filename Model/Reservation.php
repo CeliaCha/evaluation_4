@@ -1,4 +1,5 @@
 <?php
+include_once('Database.php');
 
 class Reservation extends Database {
     private $ID;
@@ -7,15 +8,13 @@ class Reservation extends Database {
     private $dateEntree;
     private $dateSortie;
     private $statut;
-    private $dateModification;
 
-    public function __construct($clientId, $chambreId, $dateEntree, $dateSortie, $statut, $dateModification) {
+    public function __construct($clientId, $chambreId, $dateEntree, $dateSortie, $statut) {
         $this->clientId = $clientId;
         $this->chambreId = $chambreId;
         $this->dateEntree = $dateEntree;
         $this->dateSortie = $dateSortie;
         $this->statut = $statut;
-        $this->dateModification = $dateModification;
     }
 
     public function __get($property) {
@@ -40,13 +39,32 @@ class Reservation extends Database {
             break;
         }
     }
-    public function create() {
+
+    static function getIndex() {
+        $req = parent::$db->prepare(
+            "SELECT reservations.id, clients.prenom AS clientprenom, clients.nom AS clientnom, chambres.nom AS chambrenom, dateEntree, dateSortie, reservations.statut, dateModification
+            FROM reservations 
+            INNER JOIN clients
+            ON reservations.clientId = clients.id
+            INNER JOIN chambres
+            ON reservations.chambreId = chambres.id"
+        );
+        $req->execute();
+        return $req->fetchAll();
+    }
+
+    static function read(int $id) {        
+        $req = parent::$db->prepare("SELECT * FROM reservations WHERE id = $id");
+        $req->execute();
+        return $req->fetch();
+    }
+
+    public function add() {
         $row = [
             'chambreId' => $this->chambreId,
             'clientId' => $this->clientId,
             'dateEntree' => $this->dateEntree,
             'dateSortie' => $this->dateSortie,
-            'dateModification' => $this->dateModification,
             'statut' => $this->statut
         ];
         $sql = 
@@ -55,7 +73,7 @@ class Reservation extends Database {
             clientId=:clientId,
             dateEntree=:dateEntree,
             dateSortie=:dateSortie,
-            dateModification=:dateModification,
+            dateModification=now(),
             statut=:statut;";
         $status = parent::$db->prepare($sql)->execute($row);
         if ($status) {
@@ -64,37 +82,27 @@ class Reservation extends Database {
         }
     }
 
-    public function read(int $id) {        
-        $stmt = parent::$db->prepare("SELECT * FROM reservations WHERE ID = $id AND status=:status LIMIT 1");
-        $stmt->execute([$column => $value, 'status' => $status]);
-        return $stmt->fetch();
-
+    public function edit(int $id) {
+        $row = [
+            'chambreId' => $this->chambreId,
+            'clientId' => $this->clientId,
+            'dateEntree' => $this->dateEntree,
+            'dateSortie' => $this->dateSortie,
+            'statut' => $this->statut
+        ];
+        $sql = "UPDATE reservations SET 
+                chambreId=:chambreId, 
+                clientId=:clientId,
+                dateEntree=:dateEntree,
+                dateSortie=:dateSortie,
+                dateModification=now(),
+                statut=:statut
+                WHERE id=$id;";
+        $status = parent::$db->prepare($sql)->execute($row);
     }
-    static function getIndex() {
 
-        $req1 = parent::$db->prepare(
-            "SELECT reservations.id, clients.prenom AS clientprenom, clients.nom AS clientnom, chambres.nom AS chambrenom, dateEntree, dateSortie, reservations.statut, dateModification
-            FROM reservations 
-            INNER JOIN clients
-            ON reservations.clientId = clients.id
-            INNER JOIN chambres
-            ON reservations.chambreId = chambres.id"
-        );
-        $req1->execute();
-        return $req1->fetchAll();
-
-    }
-    public function update($id, $arraycolumns) {
-        // @TODO : extraire colonnes du tableau en entréé
-    }
-    public function delete($id) {
-        // @TODO : extraire colonnes du tableau en entréé
+    static function delete(int $id) {
+        $where = ['id' => $id];
+        parent::$db->prepare("DELETE FROM reservations WHERE id=:id")->execute($where);
     }
 }
-
-// "SELECT id,  dateEntree, dateSortie, statut, dateReservation
-//         FROM reservations 
-//         INNER JOIN clients
-//         ON clients.id = reservations.clientId
-//         INNER JOIN chambres
-//         ON chambres.id=reservations.chambreId";

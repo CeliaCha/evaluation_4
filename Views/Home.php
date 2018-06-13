@@ -1,8 +1,6 @@
 <?php
-
-include_once('./Model/Reservation.php');
-$reservations = Reservation::getIndex();
-
+  include_once('./Model/Reservation.php');
+  $reservations = Reservation::getIndex();
 ?>
 
 <div>@Logo</div>
@@ -20,21 +18,24 @@ $reservations = Reservation::getIndex();
   </thead>
   <tbody>
     <?php
-foreach ($reservations as $row) {
-  $dateEntree = date("d-m-Y", strtotime(substr($row['dateEntree'], 0, 10)));
-  $dateSortie = date("d-m-Y", strtotime(substr($row['dateSortie'], 0, 10)));
-      echo "<tr>";
-      echo "<td> {$row['id']}</td>";
-      echo "<td> {$row['clientprenom']} {$row['clientnom']}</td>";
-      echo "<td> {$row['chambrenom']}</td>";
-      echo "<td>Du {$dateEntree} au {$dateSortie}</td>";
-      echo "<td> {$row['statut']}</td>";
-      // echo "<td> <a href='index.php?page=addedit&id={$row['id']}'>Editer</a> - <a href='index.php?page=delete&id={$row['id']}>Supprimer</a></td>";
-      echo "<td>truc</td>";
-      echo"</tr>";
-}
-?>
+      foreach ($reservations as $row) {
+        $dateEntree = date("d-m-Y", strtotime(substr($row['dateEntree'], 0, 10)));
+        $dateSortie = date("d-m-Y", strtotime(substr($row['dateSortie'], 0, 10)));
+        echo "<tr>
+                <td>{$row['id']}</td>
+                <td>{$row['clientprenom']} {$row['clientnom']}</td>
+                <td>{$row['chambrenom']}</td>
+                <td>Du {$dateEntree} au {$dateSortie}</td>
+                <td> {$row['statut']}</td>
+                <td> 
+                  <a href='index.php?page=add-edit&action=edit&idres={$row['id']}'>Editer</a> - 
+                  <a href='index.php?page=delete&idres={$row['id']}'>Supprimer</a>
+                </td>
+              </tr>"
+        ;
+      }
+    ?>
   </tbody>
 </table>
-<a class="btn btn-primary" href='index.php?page=addedit'>Ajouter</a>
+<a class="btn btn-primary" href="index.php?page=add-edit&action=add">Ajouter</a>
 <div>@pagination</div>
